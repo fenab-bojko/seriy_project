@@ -1,0 +1,34 @@
+.filterbar {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 10px;
+    gap: 30px;
+
+    .tabs {
+        flex: 1;
+        display: flex;
+        font-size: 15px;
+        gap: 10px;
+        color: gray;
+
+        div {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .active {
+            border-bottom: 2px solid blue;
+            color: blue;
+        }
+    }
+
+    select {
+        font-size: 15px;
+        border-radius: 4px;
+        background-color: #FFF;
+    }
+
+    input {
+        font-size: 15px;
+        border-radius: 4px;
+    }
+}

@@ -1,0 +1,48 @@
+.lesson-list {
+  display: flex;
+  padding: 0 10px;
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 0;
+    width: 100%;
+
+    .lesson {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      border: 1px solid gray;
+      padding: 10px;
+      border-radius: 4px;
+      list-style-type: none;
+      background-color: #fff;
+
+      .lesson__header {
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+      }
+
+      .lesson__main {
+        display: flex;
+        flex-direction: column;
+      }
+      div {
+        display: flex;
+        gap: 20px;
+      }
+    }
+  }
+  .term {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    p {
+      font-size: 15px;
+    }
+  }
+}
