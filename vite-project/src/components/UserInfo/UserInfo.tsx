@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import "./UserInfo.scss";
 import { Button } from "../Button/Button";
 import { IUser } from "../../lib/data";
@@ -17,9 +17,9 @@ export const UserInfo: FC<IUserInfo> = (props) => {
 
   const [visibleUserInfo, setVisibleUserInfo] = useState(true)
 
-  const toogleVisibleUserInfo = () => {
+  const toogleVisibleUserInfo = useCallback(() => {
     setVisibleUserInfo(prev => !prev);
-  }
+  }, [])
 
   return (
     <div className="user-info">

@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import "./Main.scss";
 
 import { Header } from "../Header/Header";
@@ -22,25 +22,25 @@ export const Main: FC<IMain> = (props) => {
   const [filterSelect, setFilterSelect] = useState("all");
   const [tabs, setTabs] = useState("course");
 
-  const onFilterInput = (filter: string) => {
+  const onFilterInput = useCallback((filter: string) => {
     setFilterInput(filter);
-  };
+  }, [])
 
-  const onFilterSelect = (filter: string) => {
+  const onFilterSelect = useCallback((filter: string) => {
     setFilterSelect(filter);
-  };
+  }, [])
 
-  const onFilterTabs = (filter: string) => {
+  const onFilterTabs = useCallback((filter: string) => {
     setTabs(filter);
-  };
+  }, [])
 
-  const onCurrentCourse = (course: string) => {
+  const onCurrentCourse = useCallback((course: string) => {
     setCurrentCourse(course);
-  };
+  }, [])
 
-  const onCourseComplite = (complite: number) => {
+  const onCourseComplite = useCallback((complite: number) => {
     setCourseComplite(complite);
-  };
+  }, [])
 
   return (
     <div className="main">

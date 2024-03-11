@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
 import "./LessonList.scss";
 import { lessons } from "../../lib/data";
 import { Button } from "../Button/Button";
@@ -15,10 +15,10 @@ interface ILessonList {
 export const LessonList: FC<ILessonList> = (props) => {
   const { tabs, filterInput, onCurrentCourse, currentCourse, onCourseComplite } = props;
 
-  const handleClick = (course: string, complite: number) => {
+  const handleClick = useCallback((course: string, complite: number) => {
     onCurrentCourse(course);
     onCourseComplite(complite);
-  };
+  }, [])
 
   return (
     <div className="lesson-list">
