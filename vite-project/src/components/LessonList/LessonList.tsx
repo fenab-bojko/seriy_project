@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import "./LessonList.scss";
 import { lessons } from "../../lib/data";
 import { Button } from "../Button/Button";
+import openCloseIcon from '../../assets/icon/openCloseIcon.svg';
 
 interface ILessonList {
   tabs: string;
@@ -27,7 +28,7 @@ export const LessonList: FC<ILessonList> = (props) => {
             <li key={lesson.id} className="lesson">
               <div className="lesson__header" onClick={() => handleClick(lesson.title, lesson.complite)}>
                 <h2>{lesson.title}</h2>
-                <img src="" alt="V" />
+                <img className={currentCourse === lesson.title ? 'revers' : ''} src={openCloseIcon} alt="V" />
               </div>
               {currentCourse === lesson.title ? (
                 <div className="lesson__main">

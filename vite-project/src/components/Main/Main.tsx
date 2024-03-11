@@ -1,16 +1,21 @@
 import React, { FC, useState } from "react";
 import "./Main.scss";
+
 import { Header } from "../Header/Header";
 import { UserInfo } from "../UserInfo/UserInfo";
 import { Filterbar } from "../Filterbar/Filterbar";
 import { LessonList } from "../LessonList/LessonList";
+import { IUser } from "../../lib/data";
 
 interface IMain {
-  onFilter: (filter: string) => void;
+  onFilter?: (filter: string) => void;
+  data: IUser;
 }
 
-export const Main: FC = () => {
-  const [currentCourse, setCurrentCourse] = useState("Дашборд");
+export const Main: FC<IMain> = (props) => {
+  const { data } = props;
+
+  const [currentCourse, setCurrentCourse] = useState("Дерево навигации");
   const [courseComplite, setCourseComplite] = useState(0);
   const [allComplite, setAllComplite] = useState(0);
   const [filterInput, setFilterInput] = useState("");
@@ -35,16 +40,12 @@ export const Main: FC = () => {
 
   const onCourseComplite = (complite: number) => {
     setCourseComplite(complite);
-  }
+  };
 
   return (
     <div className="main">
       <Header />
-      <UserInfo 
-        currentCourse={currentCourse} 
-        courseComplite={courseComplite} 
-        allComplite={allComplite} 
-        />
+      <UserInfo currentCourse={currentCourse} courseComplite={courseComplite} allComplite={allComplite} data={data} />
       <Filterbar
         tabs={tabs}
         onFilterTabs={onFilterTabs}
