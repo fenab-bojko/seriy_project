@@ -18,7 +18,6 @@ const contentStyle: CSSProperties = {
 };
 
 export const Content: FC = () => {
-  // console.log("content>>>render");
   const [currentCourse, setCorrentCourse] = useState("");
   const [compliteCourse, setCompliteCourse] = useState(0);
   const [tabsFilter, setTabsFilter] = useState("1");
