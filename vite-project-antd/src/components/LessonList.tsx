@@ -3,7 +3,7 @@ import { Flex } from "antd";
 import { Lesson } from "./Lesson";
 import { ILesson } from "../model/answers/data";
 
-type TLessonListProps = {
+export type TLessonListProps = {
   courses: ILesson[];
   currentCourse: string;
   onCurrentCourse: (title: string, complite: number) => void;
@@ -11,7 +11,6 @@ type TLessonListProps = {
 
 export const LessonList: FC<TLessonListProps> = (props) => {
   const { courses, currentCourse, onCurrentCourse } = props;
-  console.dir("lessonList>>>" + courses);
 
   return (
     <Flex vertical>

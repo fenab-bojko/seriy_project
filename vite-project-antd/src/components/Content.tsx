@@ -1,8 +1,8 @@
 import { FC, CSSProperties, useState, useCallback } from "react";
-import { Layout, Result } from "antd";
+import { Layout } from "antd";
 import { UserInfo } from "./UserInfo";
-import { Filterbar } from "./Filterbar";
-import { LessonList } from "./LessonList";
+import { Filterbar, TFilterbarProps } from "./Filterbar";
+import { LessonList, TLessonListProps } from "./LessonList";
 import { ILesson, lessons } from "../model/answers/data";
 import { TerminList } from "./TerminList";
 
@@ -18,41 +18,45 @@ const contentStyle: CSSProperties = {
 };
 
 export const Content: FC = () => {
-  console.log("content>>>render");
+  // console.log("content>>>render");
   const [currentCourse, setCorrentCourse] = useState("");
   const [compliteCourse, setCompliteCourse] = useState(0);
   const [tabsFilter, setTabsFilter] = useState("1");
   const [selectValue, setSelectValue] = useState("all");
   const [filterLessons, setFilterLessons] = useState(lessons);
 
-  const onTabs = (key: string) => {
+  const onTabs: TFilterbarProps["onTabs"] = (key) => {
     setTabsFilter(key);
   };
 
-  const onSelect = (value: string) => {
+  const onSelect: TFilterbarProps["onSelect"] = (value) => {
     setSelectValue(value);
   };
 
-  const onCurrentCourse = (title: string, complite: number) => {
+  const onCurrentCourse: TLessonListProps["onCurrentCourse"] = (title, complite) => {
     setCorrentCourse(title);
     setCompliteCourse(complite);
   };
 
-  const onFilterInput = useCallback((value?: string) => {
+  const onFilterInput: TFilterbarProps["onFilterInput"] = useCallback((value) => {
+    const result: ILesson[] = [];
+    const regExp = new RegExp(/[,.!?;:()]/);
     if (!value) setFilterLessons(lessons);
     lessons.map((lesson) => {
       lesson.title.split(" ").map((title) => {
-        if (title.toLowerCase() === value.toLowerCase()) {
-          const result: ILesson[] = [];
+        if (regExp.test(title.slice(-1))) {
+          title = title.substring(0, title.length - 1);
+        }
+        if (title.toLowerCase() === value?.toLowerCase()) {
           result.push(lesson);
-          setFilterLessons(result);
-        } else {
-          setFilterLessons(lessons);
         }
       });
+      {
+        result.length ? setFilterLessons(result) : setFilterLessons(lessons);
+      }
     });
   }, []);
-  
+
   return (
     <Layout.Content style={contentStyle}>
       <UserInfo compliteCourse={compliteCourse} currentCourse={currentCourse} />

@@ -2,7 +2,7 @@ import { FC, CSSProperties, useCallback, KeyboardEvent } from "react";
 import { Flex, Tabs, Input, Select } from "antd";
 import type { TabsProps, SelectProps } from "antd";
 
-type TFilterbarProps = {
+export type TFilterbarProps = {
   onTabs: (key: string) => void,
   currentTabs: string,
   selectValue: string,

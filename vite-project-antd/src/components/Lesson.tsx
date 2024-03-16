@@ -1,4 +1,4 @@
-import { FC, CSSProperties, useState } from "react";
+import { FC, CSSProperties, useState, useCallback } from "react";
 import { Button, Flex, Typography } from "antd";
 import { ILesson } from "../model/answers/data";
 import {
@@ -26,13 +26,13 @@ export const Lesson: FC<TLessonProps> = (props) => {
   const { course, onCurrentCourse, currentCourse } = props;
   const [isActiveLesson, setIsActiveLesson] = useState(false);
 
-  const onHandlerClick = () => {
+  const onHandlerClick = useCallback(() => {
     onCurrentCourse(course.title, course.complite);
-  };
+  }, [])
 
-  const toggleActiveLesson = () => {
+  const toggleActiveLesson = useCallback(() => {
     setIsActiveLesson((prev) => !prev);
-  };
+  }, [])
 
   return (
     <Flex className="lesson" vertical gap={20} justify="center" align="start" style={lessonStyle}>
