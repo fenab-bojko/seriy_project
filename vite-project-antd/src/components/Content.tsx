@@ -39,7 +39,7 @@ export const Content: FC = () => {
 
   const onFilterInput: TFilterbarProps["onFilterInput"] = useCallback((value) => {
     const result: ILesson[] = [];
-    const regExp = new RegExp(/[,.!?;:()]/);
+    const regExp = new RegExp(/[,.!?;:()-]/);
     if (!value) setFilterLessons(lessons);
     lessons.map((lesson) => {
       lesson.title.split(" ").map((title) => {

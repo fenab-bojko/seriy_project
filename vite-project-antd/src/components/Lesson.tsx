@@ -34,6 +34,11 @@ export const Lesson: FC<TLessonProps> = (props) => {
     setIsActiveLesson((prev) => !prev);
   }, [])
 
+  const iconStyle: CSSProperties ={
+    color: 'gray',
+    width: '2em',
+  }
+
   return (
     <Flex className="lesson" vertical gap={20} justify="center" align="start" style={lessonStyle}>
       <Flex
@@ -43,12 +48,12 @@ export const Lesson: FC<TLessonProps> = (props) => {
         onClick={toggleActiveLesson}
       >
         <Flex className="lesson__header_title" justify="left">
-          {course.complite === 100 ? <CheckCircleOutlined /> : <ClockCircleOutlined color="gray" />}
+          {course.complite === 100 ? <CheckCircleOutlined style={{color: 'green', width: '2em'}}/> : <ClockCircleOutlined style={{color: 'black', width: '2em'}} />}
           <Typography.Title level={4} style={{ margin: "0" }}>
             {course.title}
           </Typography.Title>
         </Flex>
-        {isActiveLesson ? <UpOutlined color="gray" width="4em" /> : <DownOutlined color="gray" width="4em" />}
+        {isActiveLesson ? <UpOutlined style={iconStyle} color="gray" width="4em" /> : <DownOutlined style={iconStyle}/>}
       </Flex>
       {isActiveLesson ? (
         <Flex className="lesson__main" vertical gap={10} align="start" style={{ padding: "5px" }}>

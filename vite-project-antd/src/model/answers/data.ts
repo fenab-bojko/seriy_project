@@ -20,13 +20,17 @@ export const user: IUser = {
   lastName: "Тестов",
 };
 
+
+
+
+
 export const lessons: ILesson[] = [
   {
     id: Math.round(Date.now() * Math.random()),
     title: "Дерево навигации",
     description:
       "Есть над чем задуматься: акционеры крупнейших компаний освещают чрезвычайно интересные особенности картины в целом, однако конкретные выводы, разумеется, смешаны с не уникальными данными до степени совершенной неузнаваемости, из-за чего возрастает их статус бесполезности. В целом, конечно, перспективное планирование однозначно фиксирует необходимость кластеризации усилий.",
-    complite: 0,
+    complite: 100,
     passageTime: 15,
     active: false,
   },
@@ -62,7 +66,7 @@ export const lessons: ILesson[] = [
     title: "Очередь",
     description:
       "Есть над чем задуматься: акционеры крупнейших компаний освещают чрезвычайно интересные особенности картины в целом, однако конкретные выводы, разумеется, смешаны с не уникальными данными до степени совершенной неузнаваемости, из-за чего возрастает их статус бесполезности. В целом, конечно, перспективное планирование однозначно фиксирует необходимость кластеризации усилий.",
-    complite: 0,
+    complite: 15,
     passageTime: 15,
     active: false,
   },
@@ -85,3 +89,13 @@ export const lessons: ILesson[] = [
     active: false,
   },
 ];
+
+type TSumCompliteCourse = () => number;
+export const sumCompliteCourse: TSumCompliteCourse = () => {
+    let sum: number = 0;
+    lessons.map(lesson => {
+      sum += lesson.complite;
+    })
+    console.log('start sumCompliteAll>>>' + sum);
+    return sum;
+} 
