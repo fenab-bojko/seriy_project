@@ -1,13 +1,11 @@
-import { FC, CSSProperties, useCallback, KeyboardEvent, useState } from "react";
+import { FC, CSSProperties, useCallback, ChangeEvent } from "react";
 import { Flex, Tabs, Input, Select } from "antd";
-import type { TabsProps, SelectProps } from "antd";
+import type { TabsProps, SelectProps, InputProps } from "antd";
 
 export type TFilterbarProps = {
   onTabs: (key: string) => void;
   currentTabs: string;
-  selectValue: string;
-  onSelect: (value: string) => void;
-  onFilterInput: (value?: string) => void;
+  onFilter: (selectValue?: string, inputFillter?: string) => void;
 };
 
 const filterbarStyle: CSSProperties = {
@@ -25,7 +23,7 @@ const tabs: TabsProps["items"] = [
   },
 ];
 
-const select: SelectProps["options"] = [
+const select: SelectProps<string>["options"] = [
   {
     value: "all",
     label: "Фильтровать",
@@ -41,27 +39,40 @@ const select: SelectProps["options"] = [
 ];
 
 export const Filterbar: FC<TFilterbarProps> = (props) => {
-  const { onTabs, currentTabs, selectValue, onSelect, onFilterInput } = props;
+  const { onTabs, currentTabs, onFilter } = props;
 
-  const onChange = useCallback((key: string) => {
-    onTabs(key);
-  }, []);
+  const onChange = useCallback(
+    (key: string) => {
+      onTabs(key);
+    },
+    [onTabs]
+  );
 
-  const onKeyDownInput = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
-    onFilterInput(e.target.value);
-  }, []);
+  const onChangeSelect: SelectProps<string>["onChange"] = useCallback(
+    (value: string) => {
+      onFilter(value);
+    },
+    [onFilter]
+  );
+
+  const onChangeInput: InputProps["onChange"] = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      onFilter(undefined, event.target.value);
+    },
+    [onFilter]
+  );
 
   return (
     <Flex style={filterbarStyle} gap={20} align="center" justify="space-between">
       <Tabs style={{ flex: "2" }} defaultActiveKey={currentTabs} items={tabs} onChange={onChange}></Tabs>
       <Select
         style={{ minWidth: "130px" }}
-        defaultValue={selectValue}
+        defaultValue={select[0].value as string} //TODO fix generic
         options={select}
-        onChange={(e) => onSelect(e.target.value)}
+        onChange={onChangeSelect}
       ></Select>
       <Flex>
-        <Input style={{ flex: "1" }} placeholder="Поиск..." allowClear onChange={(e) => onKeyDownInput(e)} />
+        <Input style={{ flex: "1" }} placeholder="Поиск..." allowClear onChange={onChangeInput} />
       </Flex>
     </Flex>
   );

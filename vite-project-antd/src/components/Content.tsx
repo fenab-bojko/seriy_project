@@ -1,4 +1,4 @@
-import { FC, CSSProperties, useState, useCallback } from "react";
+import { FC, CSSProperties, useState, useCallback, useEffect } from "react";
 import { Layout } from "antd";
 import { UserInfo } from "./UserInfo";
 import { Filterbar, TFilterbarProps } from "./Filterbar";
@@ -17,55 +17,54 @@ const contentStyle: CSSProperties = {
   padding: "5px",
 };
 
+type TLessonFilter = {
+  selectValue?: string;
+  inputValue?: string;
+};
+
 export const Content: FC = () => {
   const [currentCourse, setCorrentCourse] = useState("");
   const [compliteCourse, setCompliteCourse] = useState(0);
   const [tabsFilter, setTabsFilter] = useState("1");
-  const [selectValue, setSelectValue] = useState("all");
   const [filterLessons, setFilterLessons] = useState(lessons);
+  const [lessonFilter, setLessonFilter] = useState<TLessonFilter>({});
 
-  const onTabs: TFilterbarProps["onTabs"] = (key) => {
+  const onTabs: TFilterbarProps["onTabs"] = useCallback((key) => {
     setTabsFilter(key);
-  };
+  }, [])
 
-  const onSelect: TFilterbarProps["onSelect"] = (value) => {
-    setSelectValue(value);
-  };
-
-  const onCurrentCourse: TLessonListProps["onCurrentCourse"] = (title, complite) => {
+  const onCurrentCourse: TLessonListProps["onCurrentCourse"] = useCallback((title, complite) => {
     setCorrentCourse(title);
     setCompliteCourse(complite);
-  };
+  }, [])
+  //
+  const onFilter: TFilterbarProps["onFilter"] = useCallback(
+    (selectValue, inputValue) => {
+      const newLessonFilter = { ...lessonFilter };
+      if (selectValue) newLessonFilter.selectValue = selectValue;
+      if (inputValue) newLessonFilter.inputValue = inputValue;
+      setLessonFilter(newLessonFilter);
+    },[lessonFilter]
+  );
 
-  const onFilterInput: TFilterbarProps["onFilterInput"] = useCallback((value) => {
-    const result: ILesson[] = [];
-    const regExp = new RegExp(/[,.!?;:()-]/);
-    if (!value) setFilterLessons(lessons);
-    lessons.map((lesson) => {
-      lesson.title.split(" ").map((title) => {
-        if (regExp.test(title.slice(-1))) {
-          title = title.substring(0, title.length - 1);
-        }
-        if (title.toLowerCase() === value?.toLowerCase()) {
-          result.push(lesson);
-        }
+  useEffect(() => {
+    const newFilterLessons = lessons
+      .filter((lesson) => {
+        if (lessonFilter.selectValue === "all") return true; //TODO значение selectValue должно браться из фильтербар
+        if (lessonFilter.selectValue === "passed") return lesson.complite === 100;
+        if (lessonFilter.selectValue === "new") return lesson.complite !== 100;
+        return true;
+      })
+      .filter((lesson) => {
+        if (!lessonFilter.inputValue) return true;
+        return lesson.title.toLowerCase().includes(lessonFilter.inputValue.toLowerCase());
       });
-      {
-        result.length ? setFilterLessons(result) : setFilterLessons(lessons);
-      }
-    });
-  }, []);
-
+    setFilterLessons(newFilterLessons);
+  }, [lessonFilter]);
   return (
     <Layout.Content style={contentStyle}>
       <UserInfo compliteCourse={compliteCourse} currentCourse={currentCourse} />
-      <Filterbar
-        onTabs={onTabs}
-        currentTabs={tabsFilter}
-        selectValue={selectValue}
-        onSelect={onSelect}
-        onFilterInput={onFilterInput}
-      />
+      <Filterbar onTabs={onTabs} currentTabs={tabsFilter} onFilter={onFilter} />
       {tabsFilter === "1" ? (
         <LessonList courses={filterLessons} currentCourse={currentCourse} onCurrentCourse={onCurrentCourse} />
       ) : (

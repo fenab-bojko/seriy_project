@@ -96,6 +96,5 @@ export const sumCompliteCourse: TSumCompliteCourse = () => {
     lessons.map(lesson => {
       sum += lesson.complite;
     })
-    console.log('start sumCompliteAll>>>' + sum);
     return sum;
 } 

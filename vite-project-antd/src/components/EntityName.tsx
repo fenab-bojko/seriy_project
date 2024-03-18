@@ -6,7 +6,8 @@ const entityNameStyle: CSSProperties = {
     backgroundColor: "#4096ff",
     color: "#fff",
     padding: '10px 20px',
-    borderRadius: '4px'
+    borderRadius: '4px',
+    marginLeft: '5px'
 }
 
 const nameStyle: CSSProperties = {

@@ -1,4 +1,4 @@
-import { FC, CSSProperties, useState } from "react";
+import { FC, CSSProperties, useState, useCallback } from "react";
 import { Flex, Typography, Button, Progress } from "antd";
 import { AvatarContainer } from "./AvatarContainer";
 import { UpOutlined, DownOutlined } from "@ant-design/icons";
@@ -20,9 +20,9 @@ export const UserInfo: FC<TUserInfoProps> = (props) => {
 
   const [isActiveUserInfo, setIsActiveUserInfo] = useState(true);
 
-  const toggleActiveUserInfo = () => {
+  const toggleActiveUserInfo = useCallback(() => {
     setIsActiveUserInfo((prev) => !prev);
-  };
+  }, [])
 
   const iconStyle: CSSProperties = {
     color: "gray",
@@ -57,10 +57,10 @@ export const UserInfo: FC<TUserInfoProps> = (props) => {
             {compliteCourse ? <Button>Продолжить обучение</Button> : <Button>Запустить курс</Button>}
           </Flex>
           <Flex gap={20}>
-            <Flex vertical>
+            {currentCourse ? <Flex vertical>
               <Progress type="circle" percent={compliteCourse} size={80} />
               <Typography.Text>Курс пройден на {compliteCourse} %</Typography.Text>
-            </Flex>
+            </Flex> : null}
             <Flex vertical>
               <Progress type="circle" percent={Math.round(sumCompliteCourse() / lessons.length)} size={80} />
               <Typography.Text>Всего пройдено {Math.round(sumCompliteCourse() / lessons.length)} %</Typography.Text>

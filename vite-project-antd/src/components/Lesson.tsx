@@ -28,7 +28,7 @@ export const Lesson: FC<TLessonProps> = (props) => {
 
   const onHandlerClick = useCallback(() => {
     onCurrentCourse(course.title, course.complite);
-  }, [])
+  }, [course.complite, course.title, onCurrentCourse])
 
   const toggleActiveLesson = useCallback(() => {
     setIsActiveLesson((prev) => !prev);

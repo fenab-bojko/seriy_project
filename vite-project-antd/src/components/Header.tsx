@@ -1,5 +1,5 @@
 import { FC, CSSProperties } from "react";
-import { Layout, Flex, Typography } from "antd";
+import { Layout } from "antd";
 import { EntityName } from "./EntityName";
 import { Title } from "./Title";
 
